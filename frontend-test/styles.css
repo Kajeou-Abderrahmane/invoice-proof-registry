@@ -1,0 +1,255 @@
+/* Invoice Proof Registry – enterprise PoC layout (plain CSS) */
+
+:root {
+  --bg: #f5f6f8;
+  --card-bg: #fff;
+  --border: #e0e2e6;
+  --text: #1a1d23;
+  --text-muted: #5c6370;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --max-width: 900px;
+  --space: 1rem;
+  --space-lg: 1.5rem;
+  --issuer: #0d6efd;
+  --approver: #198754;
+  --finance: #6f42c1;
+  --admin: #fd7e14;
+  --neutral: #6c757d;
+  --warning-bg: #fff3cd;
+  --warning-border: #ffc107;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  margin: 0;
+  padding: var(--space-lg);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  margin-top: 0;
+  margin-bottom: var(--space);
+  font-weight: 600;
+}
+
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.1rem; }
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
+
+/* Warning banner */
+.warning.banner {
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: var(--radius);
+  padding: var(--space);
+  margin-bottom: var(--space);
+  font-weight: 500;
+}
+
+.warning.banner.hidden {
+  display: none !important;
+}
+
+/* Grid for label + input */
+.grid {
+  display: grid;
+  gap: var(--space);
+  margin-bottom: var(--space);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space);
+  align-items: start;
+}
+
+@media (min-width: 500px) {
+  .row {
+    grid-template-columns: 180px 1fr;
+    align-items: center;
+  }
+}
+
+label {
+  font-weight: 500;
+  color: var(--text);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"] {
+  padding: 0.4rem 0.6rem;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--issuer);
+}
+
+/* Buttons */
+button {
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  margin-right: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+button:hover:not(:disabled) {
+  background: var(--bg);
+  border-color: var(--text-muted);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border-color: var(--border);
+  background: var(--bg);
+}
+
+button.primary {
+  background: var(--issuer);
+  color: #fff;
+  border-color: var(--issuer);
+}
+
+button.primary:hover:not(:disabled) {
+  background: #0b5ed7;
+  border-color: #0b5ed7;
+}
+
+/* Role badges */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.badge-issuer   { background: #e7f1ff; color: var(--issuer);   }
+.badge-approver { background: #d1e7dd; color: var(--approver); }
+.badge-finance  { background: #e2d9f3; color: var(--finance);  }
+.badge-admin    { background: #ffe5d0; color: var(--admin);    }
+.badge-neutral { background: #e9ecef; color: var(--neutral);  }
+
+/* Muted helper text */
+.muted {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Output box */
+.output-box {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space);
+  margin-top: var(--space);
+  overflow: auto;
+  max-height: 360px;
+  font-family: ui-monospace, "Cascadia Code", "Consolas", "Monaco", monospace;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.output-box:empty::before {
+  content: " ";
+}
+
+/* Tx hash line */
+.tx-line {
+  font-size: 13px;
+  margin-bottom: 0.5rem;
+}
+
+.tx-line strong {
+  margin-right: 0.35rem;
+}
+
+/* Action groups */
+.action-group {
+  margin-bottom: var(--space-lg);
+}
+
+.action-group:last-child {
+  margin-bottom: 0;
+}
+
+.action-group h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.button-row label {
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.doc-hash {
+  font-size: 12px;
+  word-break: break-all;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}

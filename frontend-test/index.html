@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Invoice Proof Registry - Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Invoice Proof Registry (Local Demo)</h2>
+
+      <!-- Wallet & Network -->
+      <div class="card">
+        <h3>Wallet &amp; Network</h3>
+        <div id="networkWarningBanner" class="warning banner hidden" role="alert"></div>
+        <div class="button-row">
+          <button id="connectButton" class="primary">Connect MetaMask</button>
+          <button id="switchNetworkButton">Switch Network</button>
+        </div>
+        <div class="grid">
+          <div class="row">
+            <label>Connected address</label>
+            <span id="account">-</span>
+          </div>
+          <div class="row">
+            <label>Chain ID</label>
+            <span id="chainId">-</span>
+          </div>
+          <div class="row">
+            <label>Provider</label>
+            <span id="providerInfo">-</span>
+          </div>
+          <div class="row">
+            <label>Roles</label>
+            <span id="roleBadges" class="badges">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create Invoice Proof -->
+      <div class="card">
+        <h3>Create Invoice Proof</h3>
+        <div class="grid">
+          <div class="row">
+            <label for="invoiceId">Invoice ID</label>
+            <input id="invoiceId" type="text" />
+          </div>
+          <div class="row">
+            <label for="amount">Amount (minor units)</label>
+            <input id="amount" type="number" value="0" />
+          </div>
+          <div class="row">
+            <label for="currency">Currency (3 letters)</label>
+            <input id="currency" type="text" maxlength="3" value="GBP" />
+          </div>
+          <div class="row">
+            <label for="vendorId">Vendor ID (string to hash)</label>
+            <input id="vendorId" type="text" />
+          </div>
+          <div class="row">
+            <label for="pdfFile">PDF upload (optional)</label>
+            <input id="pdfFile" type="file" accept="application/pdf" />
+          </div>
+          <div class="row">
+            <label for="textToHash">Fallback text to hash (if no PDF)</label>
+            <input id="textToHash" type="text" />
+          </div>
+        </div>
+        <div class="button-row">
+          <button id="computeHashButton">Compute Hash</button>
+        </div>
+        <div class="doc-hash">Computed docHash: <span id="docHashDisplay">-</span></div>
+      </div>
+
+      <!-- Workflow Actions -->
+      <div class="card">
+        <h3>Workflow Actions</h3>
+
+        <div class="action-group">
+          <h4>Register &amp; read</h4>
+          <div class="button-row">
+            <button id="registerButton" title="Requires ISSUER role">Register Invoice</button>
+            <button id="getInvoiceButton" title="Read-only">Get Invoice</button>
+            <button id="verifyButton" title="Read-only">Verify</button>
+          </div>
+          <p class="muted" id="registerHelper">Requires ISSUER role.</p>
+        </div>
+
+        <div class="action-group">
+          <h4>Approve / Reject</h4>
+          <div class="button-row">
+            <button id="approveButton" title="Requires APPROVER role">Approve Invoice</button>
+            <button id="rejectButton" title="Requires APPROVER role">Reject Invoice</button>
+            <label>Reject reason: <input id="rejectReason" type="text" placeholder="Reason (hashed to bytes32)" /></label>
+          </div>
+          <p class="muted" id="approveRejectHelper">Requires APPROVER role.</p>
+        </div>
+
+        <div class="action-group">
+          <h4>Mark paid</h4>
+          <div class="button-row">
+            <button id="markPaidButton" title="Requires FINANCE role">Mark Paid</button>
+            <label>Payment ref: <input id="paymentRef" type="text" placeholder="Reference (hashed to bytes32)" /></label>
+          </div>
+          <p class="muted" id="markPaidHelper">Requires FINANCE role.</p>
+        </div>
+
+        <div class="action-group">
+          <h4>Audit</h4>
+          <div class="button-row">
+            <button id="timelineButton" title="Event audit trail">Load Event Timeline</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Output -->
+      <div class="card">
+        <h3>Output</h3>
+        <div class="tx-line"><strong>Last Tx Hash:</strong> <span id="txHash">-</span></div>
+        <pre id="outputPanel" class="output-box"></pre>
+      </div>
+
+      <!-- Event Timeline -->
+      <div class="card">
+        <h3>Event Timeline</h3>
+        <pre id="timelinePanel" class="output-box"></pre>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.umd.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
